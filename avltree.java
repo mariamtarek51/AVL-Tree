@@ -161,9 +161,9 @@ public class avltree {
 		}else {
 			samenum=1;
 			length=data1.length();
-		}
-		for(int i=0;i<length-1;i++) {
-			
+		} 
+		
+		for(int i=0;i<length;i++) {
 			if(data1.charAt(i)>data2.charAt(i)) {   
 				return data1 ;
 				
@@ -269,5 +269,4 @@ public class avltree {
 		// TODO Auto-generated method stub
 
 	}
-
 
