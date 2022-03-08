@@ -9,7 +9,14 @@ package ds2lab1;
 		 data=d;
 	 }
  }
-public class avltree {
+public class avltree { 
+	void preOrder(Node n) {
+        if (n != null) {
+            System.out.print(n.data + " ");
+            preOrder(n.left);
+            preOrder(n.right);
+        }
+    }
 	Node root; 
 	int max(int a, int b) {
         if(a>b)
@@ -30,19 +37,49 @@ public class avltree {
 		return height(n.left) - height(n.right);
 	} 
 	Node leftRotate(Node n) {
-		return n;
+		System.out.println("leftrotate"+n.data);
+		
+		Node rchild=n.right; 
+		Node t=rchild.left;
+		
+		rchild.left=n;
+		n.right=t;
+		
+		n.height = max(height(n.left), height(n.right)) + 1;
+		rchild.height = max(height(rchild.left), height(rchild.right)) + 1;
+		
+		
+		
+		return rchild ;
 	}
 	Node rightRotate(Node n) {
-		return n;
+		System.out.println("rightrotate"+n.data);
+		Node lchild=n.left; //9
+		Node t=lchild.right;
+		
+		lchild.right=n;
+		n.left=t;
+		
+		n.height = max(height(n.left), height(n.right)) + 1;
+		lchild.height = max(height(lchild.left), height(lchild.right)) + 1;
+		
+		
+		
+		return lchild;
 	}
 	Node insertnode(Node n,String data) { 
+		
+		
 		if(n==null) { //in case its the first element 
+			System.out.println("the rooot");
 			return (new Node(data));
 		} 
 		String biggerStr =maxStr(n.data,data); 
 		if(biggerStr==n.data) {
+			System.out.println("leeeft");
 			n.left=insertnode(n.left,data);
 		}else if (biggerStr==data) {
+			System.out.println("Riggght");
 			n.right=insertnode(n.right,data);
 			
 		}else {
@@ -50,31 +87,38 @@ public class avltree {
 		} 
 		n.height=1+max(height(n.left),height(n.right));
 		int bf= balancedfactor(n);
+		System.out.println("bf is"+bf);
+		if(bf!=1&&bf!=-1&&bf!=0) {
+			if(bf<-1) {
 		//RR case
 		biggerStr =maxStr(data,n.right.data);
-		if(bf<-1&&biggerStr==data) {
+		if(biggerStr==data) {
 			return leftRotate(n);
 		}
 		//RL case 
-		if(bf<-1&&biggerStr==n.right.data) {
+		if(biggerStr==n.right.data) {
 			n.right = rightRotate(n.right);
             return leftRotate(n);
 		}
+			}
+		
+			if(bf>1) {
 		//LL case 
 		biggerStr =maxStr(data,n.left.data);
-		if(bf>1&&biggerStr==n.left.data) {
+		if(biggerStr==n.left.data) {
 			return rightRotate(n);
 		}
 		//LR case 
 		
-		if(bf>1&&biggerStr==data) {
+		if(biggerStr==data) {
 			n.left = leftRotate(n.left);
             return rightRotate(n);
 		}
+			}
 		
+		}
 		
-		
-		
+		System.out.println(n.data);
 		return n;
 	} 
 	
@@ -101,7 +145,18 @@ public class avltree {
 
 	public static void main(String[] args) { 
 		avltree tree=new avltree();
-		tree.root=tree.insertnode(tree.root,"mariam");
+		System.out.println("heey"+"10");
+		
+		   tree.root = tree.insertnode(tree.root, "kn");
+		   System.out.println("heey"+"20");
+	       tree.root = tree.insertnode(tree.root, "cd");
+	        System.out.println("heey"+"30");
+	        tree.root = tree.insertnode(tree.root, "bm");
+	        tree.root = tree.insertnode(tree.root, "bm");
+	        tree.root = tree.insertnode(tree.root, "al");
+	        tree.preOrder(tree.root);
+	        // tree.root = tree.insertnode(tree.root, "50");
+	       // tree.root = tree.insertnode(tree.root, "25");
 		// TODO Auto-generated method stub
 
 	}
