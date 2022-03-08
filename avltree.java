@@ -5,7 +5,7 @@ package ds2lab1;
 	 Node right; //right child
 	 Node left; //left child
 	 Node(String d){
-		 height=0;
+		 height=1;
 		 data=d;
 	 }
  }
@@ -179,7 +179,11 @@ public class avltree {
 	        tree.searchnode(tree.root,"kn");
 	        tree.searchnode(tree.root,"norah"); 
 	        //System.out.println((tree.root.data));
-	        System.out.println( tree.height(tree.root));
+	        System.out.println( tree.height(tree.root)); 
+	        
+	        
+	        
+	     
 	        
 		// TODO Auto-generated method stub
 
