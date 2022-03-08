@@ -66,6 +66,27 @@ public class avltree {
 		
 		
 		return lchild;
+	} 
+	boolean searchnode(Node n,String data) { 
+		if(n==null) {
+			System.out.println("No,this element doesn't exist");
+			return false;
+		}
+		if(n.data==data) {
+			System.out.println("yes");
+			return true;
+		}
+		String biggerStr =maxStr(n.data,data);
+		if(biggerStr==data) {
+			searchnode(n.right,data);
+		}else {
+			searchnode(n.left,data);
+		} 
+		
+		
+		
+		return true;
+		
 	}
 	Node insertnode(Node n,String data) { 
 		
@@ -155,8 +176,9 @@ public class avltree {
 	        tree.root = tree.insertnode(tree.root, "bm");
 	        tree.root = tree.insertnode(tree.root, "al");
 	        tree.preOrder(tree.root);
-	        // tree.root = tree.insertnode(tree.root, "50");
-	       // tree.root = tree.insertnode(tree.root, "25");
+	        tree.searchnode(tree.root,"kn");
+	        tree.searchnode(tree.root,"norah");
+	        
 		// TODO Auto-generated method stub
 
 	}
