@@ -74,16 +74,15 @@ public class avltree {
 		
 		
 		if(n==null) {
-			;
+			
 			return null;
 		}
-	
+		
 		if(data.equals(n.data)) {
 			
 			return n;
 		}
 		String biggerStr =maxStr(n.data,data);
-		
 		if(biggerStr.equals(data)) {
 			return searchnode(n.right,data);
 		}else if(biggerStr.equals("sameword")) {
@@ -114,7 +113,7 @@ public class avltree {
 		} 
 		n.height=1+max(height(n.left),height(n.right));
 		int bf= balancedfactor(n);
-		System.out.println("bf is"+bf);
+		//System.out.println("bf is"+bf);
 		if(bf!=1&&bf!=-1&&bf!=0) {
 			if(bf<-1) {
 		//RR case
@@ -146,19 +145,23 @@ public class avltree {
 		
 		}
 		
-		System.out.println(n.data);
+		//System.out.println(n.data);
 		return n;
 	} 
 	
 	String maxStr(String data1,String data2) {
-		int length;
+		int length,samenum=0;
+		String maxstr="";
 		if(data1.length()>data2.length()) {
-			length=data1.length();
-		} else {
+			maxstr=data1;
 			length=data2.length();
+		} else if(data1.length()<data2.length()){
+			maxstr=data2;
+			length=data1.length();
+		}else {
+			samenum=1;
+			length=data1.length();
 		}
-		
-		
 		for(int i=0;i<length-1;i++) {
 			
 			if(data1.charAt(i)>data2.charAt(i)) {   
@@ -168,16 +171,21 @@ public class avltree {
 				return data2;
 			}
 		}
-		//in case the word already exists
-		return "sameword"; 
 		
+		//in case the word already exists
+		if(samenum==1) {
+		return "sameword"; 
+		}else {
+			return maxstr;
+			
+		}
 	 
 	}
 
 	public static void main(String[] args) { 
 		Scanner sc= new Scanner(System.in);
 		avltree tree=new avltree();
-		
+	
 		
 		  // tree.root = tree.insertnode(tree.root, "kn");
 		//   System.out.println("heey"+"20");
@@ -200,7 +208,8 @@ public class avltree {
 	            Scanner myReader = new Scanner(myObj);
 	            while (myReader.hasNextLine()) {
 	              String data = myReader.nextLine();
-	              mydictionary.root=mydictionary.insertnode(mydictionary.root, data);
+	              System.out.println("size i file for word "+data+" is "+data.length());
+	              mydictionary.root=mydictionary.insertnode(mydictionary.root,data);
 	              size=size+1;
 	              
 	            }
@@ -209,10 +218,11 @@ public class avltree {
 	            System.out.println("An error occurred.");
 	            e.printStackTrace();
 	          }
-	        System.out.println(mydictionary.root.data);
+	        //System.out.println(mydictionary.root.data);
 	        mydictionary.preOrder(mydictionary.root);
-	        System.out.println(size); 
+	        //System.out.println(size); 
 	       // mydictionary.searchnode(mydictionary.root,"egg");
+	        //System.out.println(mydictionary.height(mydictionary.root)); 
 	        System.out.println("if you want to:" );
 	        System.out.println("insert a world enter 1" );
 	        System.out.println("Look-up a word enter 2" );
@@ -259,3 +269,5 @@ public class avltree {
 		// TODO Auto-generated method stub
 
 	}
+
+
