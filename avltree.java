@@ -8,7 +8,7 @@ import java.util.Scanner; // Import the Scanner class to read text files
 	 Node right; //right child
 	 Node left; //left child
 	 Node(String d){
-		 height=1;
+		 
 		 data=d;
 	 }
  }
@@ -28,7 +28,7 @@ public class avltree {
     }
 	int height(Node n) {
         if (n == null)
-            return 0;
+            return -1;
  
         return n.height;
     } 
@@ -37,16 +37,17 @@ public class avltree {
 			return 0;
 		
 		
-		return height(n.left) - height(n.right);
+		return height(n.right) - height(n.left);
 	} 
 	Node leftRotate(Node n) {
 		
 		
 		Node rchild=n.right; 
-		Node t=rchild.left;
+		
+		n.right=rchild.left;
 		
 		rchild.left=n;
-		n.right=t;
+		
 		
 		n.height = max(height(n.left), height(n.right)) + 1;
 		rchild.height = max(height(rchild.left), height(rchild.right)) + 1;
@@ -58,10 +59,10 @@ public class avltree {
 	Node rightRotate(Node n) {
 		
 		Node lchild=n.left; 
-		Node t=lchild.right;
+		n.left=lchild.right;
 		
 		lchild.right=n;
-		n.left=t;
+		
 		
 		n.height = max(height(n.left), height(n.right)) + 1;
 		lchild.height = max(height(lchild.left), height(lchild.right)) + 1;
@@ -118,28 +119,28 @@ public class avltree {
 			if(bf<-1) {
 		//RR case
 				
-		biggerStr =maxStr(data,n.right.data);
-		if(biggerStr==data) {
-			return leftRotate(n);
-		}
-		//RL case 
-		if(biggerStr==n.right.data) {
-			n.right = rightRotate(n.right);
-            return leftRotate(n);
-		}
-			}
-		
-			if(bf>1) {
-		//LL case 
 		biggerStr =maxStr(data,n.left.data);
 		if(biggerStr==n.left.data) {
 			return rightRotate(n);
 		}
 		//LR case 
-		
 		if(biggerStr==data) {
 			n.left = leftRotate(n.left);
             return rightRotate(n);
+		}
+			}
+		
+			if(bf>1) {
+		//LL case 
+		biggerStr =maxStr(data,n.right.data);
+		if(biggerStr==data) {
+			return leftRotate(n);
+		}
+		//RL case 
+		
+		if(biggerStr==n.right.data) {
+			n.right = rightRotate(n.right);
+            return leftRotate(n);
 		}
 			}
 		
@@ -280,7 +281,8 @@ public class avltree {
 	        mydictionary.preOrder(mydictionary.root);
 	        //System.out.println(size); 
 	       // mydictionary.searchnode(mydictionary.root,"egg");
-	        //System.out.println(mydictionary.height(mydictionary.root)); 
+	        //System.out.println(mydictionary.height(mydictionary.root));  
+	        System.out.println(mydictionary.height(mydictionary.root));
 	        System.out.println("if you want to:" );
 	        System.out.println("insert a world enter 1" );
 	        System.out.println("Look-up a word enter 2" );
@@ -340,4 +342,5 @@ public class avltree {
 		// TODO Auto-generated method stub
 
 	}
+
 
