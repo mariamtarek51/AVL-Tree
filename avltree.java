@@ -8,7 +8,7 @@ import java.util.Scanner; // Import the Scanner class to read text files
 	 Node right; //right child
 	 Node left; //left child
 	 Node(String d){
-		 height=1;
+		 
 		 data=d;
 	 }
  }
@@ -28,7 +28,7 @@ public class avltree {
     }
 	int height(Node n) {
         if (n == null)
-            return 0;
+            return -1;
  
         return n.height;
     } 
@@ -37,16 +37,17 @@ public class avltree {
 			return 0;
 		
 		
-		return height(n.left) - height(n.right);
+		return height(n.right) - height(n.left);
 	} 
 	Node leftRotate(Node n) {
 		
 		
-		Node rchild=n.right; 
-		Node t=rchild.left;
+	    Node rchild=n.right; 
+		
+		n.right=rchild.left;
 		
 		rchild.left=n;
-		n.right=t;
+		
 		
 		n.height = max(height(n.left), height(n.right)) + 1;
 		rchild.height = max(height(rchild.left), height(rchild.right)) + 1;
@@ -58,10 +59,10 @@ public class avltree {
 	Node rightRotate(Node n) {
 		
 		Node lchild=n.left; 
-		Node t=lchild.right;
+		n.left=lchild.right;
 		
 		lchild.right=n;
-		n.left=t;
+		
 		
 		n.height = max(height(n.left), height(n.right)) + 1;
 		lchild.height = max(height(lchild.left), height(lchild.right)) + 1;
@@ -118,28 +119,28 @@ public class avltree {
 			if(bf<-1) {
 		//RR case
 				
-		biggerStr =maxStr(data,n.right.data);
-		if(biggerStr==data) {
-			return leftRotate(n);
-		}
-		//RL case 
-		if(biggerStr==n.right.data) {
-			n.right = rightRotate(n.right);
-            return leftRotate(n);
-		}
-			}
-		
-			if(bf>1) {
-		//LL case 
 		biggerStr =maxStr(data,n.left.data);
 		if(biggerStr==n.left.data) {
 			return rightRotate(n);
 		}
 		//LR case 
-		
 		if(biggerStr==data) {
 			n.left = leftRotate(n.left);
             return rightRotate(n);
+		}
+			}
+		
+			if(bf>1) {
+		//LL case 
+		biggerStr =maxStr(data,n.right.data);
+		if(biggerStr==data) {
+			return leftRotate(n);
+		}
+		//RL case 
+		
+		if(biggerStr==n.right.data) {
+			n.right = rightRotate(n.right);
+            return leftRotate(n);
 		}
 			}
 		
@@ -242,22 +243,10 @@ public class avltree {
 
 	public static void main(String[] args) { 
 		Scanner sc= new Scanner(System.in);
-		avltree tree=new avltree();
+	
 
 
-		  // tree.root = tree.insertnode(tree.root, "kn");
-		//   System.out.println("heey"+"20");
-	    //   tree.root = tree.insertnode(tree.root, "cd");
-	     //   System.out.println("heey"+"30");
-	    //   tree.root = tree.insertnode(tree.root, "bm");
-	    ////   tree.root = tree.insertnode(tree.root, "bm");
-	    //   tree.root = tree.insertnode(tree.root, "al");
-	    //    tree.preOrder(tree.root);
-	    //    System.out.println(tree.root);
-	    //    tree.searchnode(tree.root,"kn");
-	     //   tree.searchnode(tree.root,"norah");
-	        //System.out.println((tree.root.data));
-	     //   System.out.println( tree.height(tree.root)-1);
+	
 
 	        int size=0;
 	        avltree mydictionary=new avltree();
@@ -266,7 +255,7 @@ public class avltree {
 	            Scanner myReader = new Scanner(myObj);
 	            while (myReader.hasNextLine()) {
 	              String data = myReader.nextLine();
-	              System.out.println("size i file for word "+data+" is "+data.length());
+	              
 	              mydictionary.root=mydictionary.insertnode(mydictionary.root,data);
 	              size=size+1;
 
@@ -276,6 +265,7 @@ public class avltree {
 	            System.out.println("An error occurred.");
 	            e.printStackTrace();
 	          }
+	       
 		System.out.println("if you want to:" );
 		System.out.println("Print dictionary size enter 0" );
 		System.out.println("insert a world enter 1" );
@@ -288,7 +278,7 @@ public class avltree {
 
 
 		if(str!=6) {
-            if(str==0){System.out.println(mydictionary.height(mydictionary.root));}
+            if(str==0){System.out.println(size);}
 
 			if(str==1) {
 				System.out.println("Enter your word" );
@@ -298,6 +288,7 @@ public class avltree {
 				}else {
 
 					mydictionary.root=mydictionary.insertnode(mydictionary.root, a);
+					size=size+1;
 					mydictionary.preOrder(mydictionary.root);
 				}
 			}else if (str==2) {
