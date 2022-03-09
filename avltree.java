@@ -243,8 +243,8 @@ public class avltree {
 	public static void main(String[] args) { 
 		Scanner sc= new Scanner(System.in);
 		avltree tree=new avltree();
-	
-		
+
+
 		  // tree.root = tree.insertnode(tree.root, "kn");
 		//   System.out.println("heey"+"20");
 	    //   tree.root = tree.insertnode(tree.root, "cd");
@@ -255,12 +255,12 @@ public class avltree {
 	    //    tree.preOrder(tree.root);
 	    //    System.out.println(tree.root);
 	    //    tree.searchnode(tree.root,"kn");
-	     //   tree.searchnode(tree.root,"norah"); 
+	     //   tree.searchnode(tree.root,"norah");
 	        //System.out.println((tree.root.data));
 	     //   System.out.println( tree.height(tree.root)-1);
-	        
+
 	        int size=0;
-	        avltree mydictionary=new avltree();  
+	        avltree mydictionary=new avltree();
 	        try {
 	            File myObj = new File("dictionary.txt");
 	            Scanner myReader = new Scanner(myObj);
@@ -269,75 +269,114 @@ public class avltree {
 	              System.out.println("size i file for word "+data+" is "+data.length());
 	              mydictionary.root=mydictionary.insertnode(mydictionary.root,data);
 	              size=size+1;
-	              
+
 	            }
 	            myReader.close();
 	          } catch (FileNotFoundException e) {
 	            System.out.println("An error occurred.");
 	            e.printStackTrace();
 	          }
-	        //System.out.println(mydictionary.root.data);
-	        mydictionary.preOrder(mydictionary.root);
-	        //System.out.println(size); 
-	       // mydictionary.searchnode(mydictionary.root,"egg");
-	        //System.out.println(mydictionary.height(mydictionary.root)); 
-	        System.out.println("if you want to:" );
-	        System.out.println("insert a world enter 1" );
-	        System.out.println("Look-up a word enter 2" );
-	        System.out.println("remove a word enter 3" ); 
-	        System.out.println("End the program enter 4");
-	        int str= sc.nextInt(); 
-	        
-	        	
-	        if(str!=4) {
-	        	System.out.println("Enter your word" ); 
-		        String a= sc.next();
-		        
-		        if(str==1) {
-		        	if(mydictionary.searchnode(mydictionary.root,a)!=null) {
-		        		System.out.println(" Word already in the dictionary!");
-		        	}else {
-		        	
-		        mydictionary.root=mydictionary.insertnode(mydictionary.root, a);
-		        mydictionary.preOrder(mydictionary.root);
-		        }
-		        }else if (str==2) {
-		        	
-		        	if(mydictionary.searchnode(mydictionary.root,a)!=null) {
-		        		System.out.println("YES");
-		        	}else {
-		        		System.out.println("No");
-		        	}
-		        	
-		        	
-		        }else if (str==3) {
-					if(mydictionary.searchnode(mydictionary.root,a)!=null) {
-						System.out.println("YES");
-						mydictionary.preOrder(mydictionary.root);
-						mydictionary.DeleteNode(mydictionary.root,a);
-						System.out.println();
-						mydictionary.preOrder(mydictionary.root);
+		System.out.println("if you want to:" );
+		System.out.println("Print dictionary size enter 0" );
+		System.out.println("insert a world enter 1" );
+		System.out.println("Look-up a word enter 2" );
+		System.out.println("remove a word enter 3" );
+		System.out.println("Batch look-ups enter 4" );
+		System.out.println("Batch deletions enter 5" );
+		System.out.println("End the program enter 6");
+		int str= sc.nextInt();
 
 
-					}else {
-						System.out.println("Error !The word is not found");
-					}
+		if(str!=6) {
+            if(str==0){System.out.println(mydictionary.height(mydictionary.root));}
+
+			if(str==1) {
+				System.out.println("Enter your word" );
+				String a= sc.next();
+				if(mydictionary.searchnode(mydictionary.root,a)!=null) {
+					System.out.println(" Word already in the dictionary!");
+				}else {
+
+					mydictionary.root=mydictionary.insertnode(mydictionary.root, a);
+					mydictionary.preOrder(mydictionary.root);
 				}
-				else {
-		        	///
-		        	
-		        	System.out.println("remove node");
-		        	
-		        	///
-		        }
-	        	
-	        }
-	        
-	        
-	        }
-	    
-	        
-		// TODO Auto-generated method stub
+			}else if (str==2) {
+				System.out.println("Enter your word" );
+				String a= sc.next();
+				if(mydictionary.searchnode(mydictionary.root,a)!=null) {
+					System.out.println("YES");
+				}else {
+					System.out.println("No");
+				}
+
+
+			}else if (str==3) {
+				System.out.println("Enter your word" );
+				String a= sc.next();
+				if(mydictionary.searchnode(mydictionary.root,a)!=null) {
+					System.out.println("YES");
+					mydictionary.preOrder(mydictionary.root);
+					mydictionary.DeleteNode(mydictionary.root,a);
+					System.out.println();
+					mydictionary.preOrder(mydictionary.root);
+
+
+				}else {
+					System.out.println("Error !The word is not found");
+				}
+			}else if (str==4) {
+				int sizeQueries=0;
+				int found =0;
+				try {
+					File myObj = new File("queries.txt");
+					Scanner myReader = new Scanner(myObj);
+					while (myReader.hasNextLine()) {
+						String data = myReader.nextLine();
+						if(mydictionary.searchnode(mydictionary.root,data)!=null) {
+							System.out.println(data+"--> YES");
+							found=found+1;}
+						else {System.out.println(data+"--> NO");}
+						sizeQueries=sizeQueries+1;
+
+					}
+					System.out.println("Queries file contains :"+sizeQueries);
+					System.out.println("Total number of found words in mydictionary : "+found);
+					myReader.close();
+				} catch (FileNotFoundException e) {
+					System.out.println("An error occurred.");
+					e.printStackTrace();
+				}
+			}if(str==5){
+				try {
+					File myObj = new File("deletions.txt");
+					Scanner myReader = new Scanner(myObj);
+					while (myReader.hasNextLine()) {
+						String data = myReader.nextLine();
+
+						if(mydictionary.searchnode(mydictionary.root,data)!=null) {
+							mydictionary.DeleteNode(mydictionary.root,data);
+						}}
+					myReader.close();
+					System.out.println("dictionary after deletions: ");
+					mydictionary.preOrder(mydictionary.root);
+				} catch (FileNotFoundException e) {
+					System.out.println("An error occurred.");
+					e.printStackTrace();
+				}
+			}
+
+			else {
+				///
+
+				System.out.println(" ");
+
+				///
+			}
+
+		}
 
 	}
+
+
+}
 
