@@ -1,0 +1,7 @@
+structure
+control
+operating
+system
+data
+year
+paradigms
