@@ -147,8 +147,66 @@ public class avltree {
 		
 		//System.out.println(n.data);
 		return n;
-	} 
-	
+	}
+
+	Node DeleteNode(Node n, String data){
+         if (n==null){
+			 return  n;
+		 }
+		 else if (maxStr(data,n.data) ==data){
+                 n.right=DeleteNode(n.right,data);
+		 }
+		 else if (maxStr(data,n.data) ==n.data){
+			 n.left=DeleteNode(n.left,data);
+		 }
+		 else {
+			 if ((n.right==null || n.left==null)){
+				 Node newnode=null;
+				 if(n.right!=null){ newnode=n.right; }
+				 else if (n.left!=null){ newnode=n.left; }
+				 if(newnode==null){
+					 newnode=n;
+					 n=null;
+				 }else{
+					 n=newnode;
+				 }newnode=null;
+			 }
+			 else {
+				 Node t=minimumNode(n.right);
+				 n.data=t.data;
+				 n.right=DeleteNode(n.right,t.data);
+			 }
+		 }
+		 if(n==null){
+			 return n;
+		 }
+		 n.height=max(height(n.right),height(n.left))+1;
+		 if(balancedfactor(n)>1){
+			 if(balancedfactor(n.left)>=0){
+				 return rightRotate(n);
+			 }else{
+				 n.left=leftRotate(n.left);
+				 return rightRotate(n);
+			 }
+		 }else if (balancedfactor(n)<-1){
+			 if(balancedfactor(n.right)<=0){
+				 return leftRotate(n);
+			 }else {
+				 n.right=rightRotate(n.right);
+				 return rightRotate(n);
+			 }
+		 }
+       return n;
+	}
+	// Find the minimum node on left side
+	public Node minimumNode(Node node){
+		Node result = node;
+		while (result.left != null)
+		{
+			result = result.left;
+		}
+		return result;
+	}
 	String maxStr(String data1,String data2) {
 		int length,samenum=0;
 		String maxstr="";
@@ -252,7 +310,20 @@ public class avltree {
 		        	}
 		        	
 		        	
-		        }else {
+		        }else if (str==3) {
+					if(mydictionary.searchnode(mydictionary.root,a)!=null) {
+						System.out.println("YES");
+						mydictionary.preOrder(mydictionary.root);
+						mydictionary.DeleteNode(mydictionary.root,a);
+						System.out.println();
+						mydictionary.preOrder(mydictionary.root);
+
+
+					}else {
+						System.out.println("Error !The word is not found");
+					}
+				}
+				else {
 		        	///
 		        	
 		        	System.out.println("remove node");
